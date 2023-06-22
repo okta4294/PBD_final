@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2023 at 03:01 PM
+-- Generation Time: Jun 22, 2023 at 04:42 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -24,6 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `apoteker`
+--
+
+CREATE TABLE `apoteker` (
+  `Id_Apoteker` int(11) NOT NULL,
+  `Nama_Apoteker` varchar(50) NOT NULL,
+  `Nohp` varchar(15) NOT NULL,
+  `Alamat` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `apoteker`
+--
+
+INSERT INTO `apoteker` (`Id_Apoteker`, `Nama_Apoteker`, `Nohp`, `Alamat`, `Email`) VALUES
+(1, 'Kibutsuji Muzan', '081233344', 'Gunungkidul', 'muzan@gmail.com'),
+(2, 'Tamayo', '08223311', 'Condongcatur', 'tamayo@yahoo.com'),
+(3, 'Shoko Ieiri', '08955447', 'Gunungkidul', 'shoko@gmail.com'),
+(4, 'Tony Chopper', '0854678', 'Seturan', 'tonytony@gmail.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customer`
 --
 
@@ -34,6 +58,17 @@ CREATE TABLE `customer` (
   `Nohp_Customer` varchar(15) NOT NULL,
   `Alamat_Customer` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`Kode_Customer`, `Nama_Customer`, `JenisKelamin_Customer`, `Nohp_Customer`, `Alamat_Customer`) VALUES
+(1, 'Jotaro Kujo', 'Laki-Laki', '087764512', 'Homeless'),
+(2, 'Umaru', 'Perempuan', '08945523', 'Pondok indah'),
+(3, 'Monkey D Luffy', 'Laki-Laki', '08653378', 'Condongcatur'),
+(4, 'Asep', 'Laki-Laki', '087754663', 'Kulonprogo'),
+(5, 'Suminah', 'Perempuan', '0855441122', 'Semarang');
 
 -- --------------------------------------------------------
 
@@ -58,22 +93,18 @@ CREATE TABLE `item_nota` (
 CREATE TABLE `kasir` (
   `Kode_Kasir` int(11) NOT NULL,
   `Nama_Kasir` varchar(50) NOT NULL,
-  `Pass` varchar(15) NOT NULL
+  `Pass` varchar(15) NOT NULL,
+  `Nohp` int(20) NOT NULL,
+  `Alamat` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `manager`
+-- Dumping data for table `kasir`
 --
 
-CREATE TABLE `manager` (
-  `Id_Manager` int(11) NOT NULL,
-  `Nama_Manager` varchar(50) NOT NULL,
-  `Nohp` varchar(15) NOT NULL,
-  `Alamat` varchar(50) NOT NULL,
-  `Email` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `kasir` (`Kode_Kasir`, `Nama_Kasir`, `Pass`, `Nohp`, `Alamat`) VALUES
+(1, 'Isma', '123', 87753421, 'Candigebang'),
+(2, 'Rojali', '2233', 875332, 'Condongcatur');
 
 -- --------------------------------------------------------
 
@@ -83,11 +114,19 @@ CREATE TABLE `manager` (
 
 CREATE TABLE `nota` (
   `Nonota` varchar(10) NOT NULL,
-  `TglTransaksi` varchar(50) NOT NULL,
+  `TglTransaksi` date NOT NULL,
   `Kode_Kasir` int(11) NOT NULL,
   `Kode_Customer` int(11) NOT NULL,
   `Total_Pembayaran` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nota`
+--
+
+INSERT INTO `nota` (`Nonota`, `TglTransaksi`, `Kode_Kasir`, `Kode_Customer`, `Total_Pembayaran`) VALUES
+('ert', '2023-06-13', 2, 2, 60000),
+('we4', '2023-06-24', 1, 3, 50000);
 
 -- --------------------------------------------------------
 
@@ -102,6 +141,18 @@ CREATE TABLE `obat` (
   `Stok_Obat` varchar(50) NOT NULL,
   `Expaired_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `obat`
+--
+
+INSERT INTO `obat` (`Kode_Obat`, `Nama_Obat`, `Harga_Obat`, `Stok_Obat`, `Expaired_date`) VALUES
+('aa', 'Insto', 15000, '40', '2026-10-01'),
+('bb', 'Antimo', 20000, '50', '2026-08-21'),
+('ee', 'Neo Rheumacyl', 20000, '20', '2027-04-23'),
+('hh', 'Dulcolax', 30000, '30', '2027-07-01'),
+('rr', 'Panadol', 40000, '50', '2026-11-05'),
+('ss', 'Sanmol', 30000, '60', '2028-09-14');
 
 -- --------------------------------------------------------
 
@@ -120,6 +171,12 @@ CREATE TABLE `pemilik` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `apoteker`
+--
+ALTER TABLE `apoteker`
+  ADD PRIMARY KEY (`Id_Apoteker`);
 
 --
 -- Indexes for table `customer`
@@ -141,18 +198,13 @@ ALTER TABLE `kasir`
   ADD PRIMARY KEY (`Kode_Kasir`);
 
 --
--- Indexes for table `manager`
---
-ALTER TABLE `manager`
-  ADD PRIMARY KEY (`Id_Manager`);
-
---
 -- Indexes for table `nota`
 --
 ALTER TABLE `nota`
   ADD PRIMARY KEY (`Nonota`),
   ADD UNIQUE KEY `Kode_Kasir` (`Kode_Kasir`),
-  ADD UNIQUE KEY `Kode_Customer` (`Kode_Customer`);
+  ADD UNIQUE KEY `Kode_Customer` (`Kode_Customer`),
+  ADD UNIQUE KEY `Kode_Kasir_2` (`Kode_Kasir`);
 
 --
 -- Indexes for table `obat`
@@ -171,22 +223,22 @@ ALTER TABLE `pemilik`
 --
 
 --
+-- AUTO_INCREMENT for table `apoteker`
+--
+ALTER TABLE `apoteker`
+  MODIFY `Id_Apoteker` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Kode_Customer` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Kode_Customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kasir`
 --
 ALTER TABLE `kasir`
-  MODIFY `Kode_Kasir` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `manager`
---
-ALTER TABLE `manager`
-  MODIFY `Id_Manager` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Kode_Kasir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pemilik`
